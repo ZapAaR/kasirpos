@@ -19,6 +19,7 @@ class Products extends Model
         'harga_jual',
         'stok',
         'tersedia',
+        'gambar'
     ];
 
     protected $casts = [
@@ -31,5 +32,28 @@ class Products extends Model
     public function kategori(): BelongsTo
     {
         return $this->belongsTo(Categories::class, 'category_id', 'id');
+    }
+
+    public function getKeuntunganAttribute()
+    {
+        return $this->harga_jual - $this->harga_modal;
+    }
+
+    public function getMarginAttribute()
+    {
+        if ($this->harga_modal == 0) {
+            return 0;
+        }
+        return (($this->harga_jual - $this->harga_modal) / $this->harga_modal) * 100;
+    }
+
+    public function getHargaModalFormattedAttribute()
+    {
+        return 'Rp ' . number_format($this->harga_modal, 0, ',', '.');
+    }
+
+    public function getHargaJualFormattedAttribute()
+    {
+        return 'Rp ' . number_format($this->harga_jual, 0, ',', '.');
     }
 }
