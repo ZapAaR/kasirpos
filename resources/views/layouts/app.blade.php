@@ -128,9 +128,13 @@
             {{-- Navbar --}}
             @include('layouts.navigation')
 
-            <main class="flex-1 overflow-y-auto">
-                <div class="px-6 py-6 lg:px-8">
-                    @yield('content')
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="px-4 sm:px-6 lg:px-8 py-6 lg:py-8 space-y-6">
+                    @if (isset($slot))
+                        {{ $slot }}
+                    @else
+                        @yield('content')
+                    @endif
                 </div>
             </main>
 

@@ -26,13 +26,13 @@ class Transaction_details extends Model
         'subtotal' => 'float',
     ];
 
-    public function transaksi(): BelongsTo
+    public function transaction(): BelongsTo
     {
-        return $this->belongsTo(Transactions::class, 'transaction_id', 'id');
+        return $this->belongsTo(Transactions::class, 'transaction_id');
     }
 
-    public function produk(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(Products::class, 'product_id', 'id');
+        return $this->belongsTo(Products::class, 'product_id');
     }
 }

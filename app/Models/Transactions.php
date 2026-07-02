@@ -28,13 +28,29 @@ class Transactions extends Model
         'created_at' => 'datetime',
     ];
 
-    public function kasir(): BelongsTo
+    public function details(): HasMany
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->hasMany(Transaction_details::class, 'transaction_id');
     }
 
-    public function detailTransaksi(): HasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany(Transaction_details::class, 'transaction_id', 'id');
+        return $this->belongsTo(User::class);
+    }
+
+    // Accessor format rupiah
+    public function getTotalHargaFormattedAttribute(): string
+    {
+        return 'Rp ' . number_format($this->total_harga, 0, ',', '.');
+    }
+
+    public function getTotalBayarFormattedAttribute(): string
+    {
+        return 'Rp ' . number_format($this->total_bayar, 0, ',', '.');
+    }
+
+    public function getKembalianFormattedAttribute(): string
+    {
+        return 'Rp ' . number_format($this->kembalian, 0, ',', '.');
     }
 }
